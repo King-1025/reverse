@@ -62,8 +62,9 @@ function check_apktool()
       wget -O $apktool https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool
       wget -O "${apktool}.jar" https://github.com/iBotPeaches/Apktool/releases/download/v2.4.1/apktool_2.4.1.jar
       chmod +x $apktool
-      ln -sf $apktool $DEC_HOME/bin
+      ln -sf $apktool $DEC_HOME/bin/apktool
    fi
+   echo $PATH
    which apktool 2>&1 >> /dev/null
    if [ $? -eq 1 ]; then
       echo "apktool not exist!"
