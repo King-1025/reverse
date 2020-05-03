@@ -55,7 +55,7 @@ function check_requests()
 function check_apktool()
 {
    which apktool 2>&1 >> /dev/null
-   if [ $? -ne 0 ]; then
+   if [ $? -eq 1 ]; then
       local home="$DEC_HOME/apktool"
       local apktool="$home/apktool"
       mkdir -p $home
@@ -65,7 +65,7 @@ function check_apktool()
       ln -sf $apktool $DEC_HOME/bin
    fi
    which apktool 2>&1 >> /dev/null
-   if [ $? -ne 0 ]; then
+   if [ $? -eq 1 ]; then
       echo "apktool not exist!"
       exit 1
    else
