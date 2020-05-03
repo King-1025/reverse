@@ -54,6 +54,7 @@ function check_requests()
 
 function check_apktool()
 {
+   set -x
    local home="$DEC_HOME/apktool"
    local apktool="$home/apktool"
    if [ ! -e $apktool ]; then
@@ -70,6 +71,7 @@ function check_apktool()
    else
       echo "apktool oK!"
    fi
+   set +x
 }
 
 function exec_script()
