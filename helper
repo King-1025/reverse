@@ -21,10 +21,9 @@ function init()
    local script=$(jq .task.script $CONFIG -r)
    local isu=$(jq .task.is_upload $CONFIG -r)
    local result=$RESULT
-
-   set_github_env "PIP_HOME" "$HOME/pip"
-   set_github_env "PIP_CACHE_KEY" "pip-x"
-
+   local ph="$pythonLocation/lib/python3.8/site-packages"
+   set_github_env "PIP_HOME" "$ph"
+   set_github_env "PIP_CACHE_KEY" "pip-packages"
    set_github_env "DEC_HOME" "$HOME/.reverse"
    set_github_env "DEC_CACHE_KEY" "reverse-$key"
    set_github_env "TASK_SCRIPT" "$script"

@@ -44,9 +44,13 @@ jobs:
 
       - name: 准备逆向环境
         run: ./helper prepare
+        env:
+          ESC_KEY: ${{ secrets.ESC_KEY }}
 
       - name: 执行逆向脚本
         run: ./helper script
+        env:
+          ESC_KEY: ${{ secrets.ESC_KEY }}
 
       - name: 上传结果
         if: env.IS_UPLOAD == 'true'

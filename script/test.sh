@@ -6,6 +6,8 @@ RESULT=$TASK_RESULT
 echo ROOT: $ROOT
 echo RESULT: $RESULT
 
+tree -L 1 -h $PIP_HOME
+echo ""
 pip show pip
 echo ""
 esc_ng list
