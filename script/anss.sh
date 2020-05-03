@@ -8,6 +8,7 @@ echo ROOT: $ROOT
 echo RESULT: $RESULT
 
 export ESC_LOCAL_PATH=$ANSS
+export NO_DOWNLOAD_STATUS=1
 
 mkdir -p $ANSS $RESULT && \
 esc_ng download 11352974 && \

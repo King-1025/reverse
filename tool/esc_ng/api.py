@@ -270,13 +270,18 @@ class Escience:
                      print("%s exist!" %path)
                      return path
              
+             ns=True
+             if os.getenv("NO_DOWNLOAD_STATUS") == "1":
+                ns=False
+
              with open(path, "wb") as file:
                 for data in response.iter_content(chunk_size=chunk_size):
                     file.write(data)
                     data_count = data_count + len(data)
                     now_jd = (data_count / content_size) * 100
                     #print("\r%s：%d%% (%s/%s) " % (name, now_jd,
-                    print("\rstatus: %3d%% (%6s /%6s) " % (now_jd,
+                    if ns:
+                      print("\rstatus: %3d%% (%6s /%6s) " % (now_jd,
                       self.bytes2human(data_count), 
                       self.bytes2human(content_size)), end=" ")
 
