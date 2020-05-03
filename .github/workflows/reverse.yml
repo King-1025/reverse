@@ -1,0 +1,39 @@
+name: 逆向工程
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: 配置 JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+
+    - name: 初始化
+      run: ./helper init
+
+    - name: 检查缓存
+      uses: actions/cache@v1
+      id: cache
+      with:
+            path: ${{ env.DEC_HOME }}
+            key: ${{ runner.os }}-${{ env.DEC_CACHE_KEY }}
+
+    - name: 准备逆向环境
+      run: ./helper prepare
+
+    - name: 执行逆向脚本
+      run: ./helper script
+
+    - name: 上传结果
+      if: env.IS_UPLOAD == 'true'
+      uses: actions/upload-artifact@v1
+      with:
+         name: result
+         path: result

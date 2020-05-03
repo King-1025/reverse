@@ -1,0 +1,9 @@
+{
+   "reverse":{
+      "key":"apktool_default"
+   },
+   "task":{
+      "script":"./script/test.sh",
+      "is_upload":"true"
+   }
+}

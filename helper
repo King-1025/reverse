@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+
+ROOT=(pwd)
+RESULT=$ROOT/result
+CONFIG=$ROOT/.config.json
+
+function app()
+{
+   local action=$1
+   shift
+   case "$action" in
+      "init") init $*;;
+      "prepare") prepare $*;;
+      "script") exec_script;;
+   esac
+}
+
+function init()
+{
+   local key=$(jq .reverse.key $CONFIG -r)
+   local script=$(jq .task.script $CONFIG -r)
+   local isu=$(jq .task.is_upload $CONFIG -r)
+   local result=$RESULT
+   set_github_env "DEC_HOME" "$HOME/.reverse"
+   set_github_env "DEC_CACHE_KEY" "reverse-$key"
+   set_github_env "TASK_SCRIPT" "$script"
+   set_github_env "TASK_RESULT" "$result"
+   set_github_env "IS_UPLOAD" "$isu"
+   add_github_path "$DEC_HOME/bin"
+   add_github_path "$ROOT/tool/bin"
+}
+
+function prepare()
+{
+   check_dir
+   check_apktool
+}
+
+function check_dir()
+{
+   mkdir -p $DEC_HOME/bin
+}
+
+function check_apktool()
+{
+   which apktool 2>&1 >> /dev/null
+   if [ $? -ne 0 ]; then
+      local home="$DEC_HOME/apktool"
+      local apktool="$home/apktool"
+      mkdir -p $home
+      wget -o $apktool https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool
+      wget -o "${apktool}.jar" https://github.com/iBotPeaches/Apktool/releases/download/v2.4.1/apktool_2.4.1.jar
+      chmod +x $apktool
+      ln -sf $apktool $DEC_HOME/bin
+   fi
+   which apktool 2>&1 >> /dev/null
+   if [ $? -ne 0 ]; then
+      echo "apktool not exist!"
+      exit 1
+   else
+      echo "apktool oK!"
+   fi
+}
+
+function exec_script()
+{
+   local sc=$TASK_SCRIPT
+   local re=$TASK_RESULT
+   if [ -e $sc ]; then
+      $sc
+      echo "RESULT: $re"
+      echo ""
+      tree -a -L 3 -h $re
+   else
+      echo "not found script! $sc"
+      exit 1
+   fi
+}
+
+function set_github_env()
+{
+  if [ $# -eq 2 ]; then
+     echo "::set-env name=$1::$2"
+  fi
+}
+
+function add_github_path()
+{
+  if [ $# -eq 1 ]; then
+     echo "::add-path::$1"
+  fi
+}
+
+app $*
