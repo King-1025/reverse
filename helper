@@ -54,10 +54,9 @@ function check_requests()
 
 function check_apktool()
 {
-   which apktool 2>&1 >> /dev/null
-   if [ $? -eq 1 ]; then
-      local home="$DEC_HOME/apktool"
-      local apktool="$home/apktool"
+   local home="$DEC_HOME/apktool"
+   local apktool="$home/apktool"
+   if [ ! -e $apktool ]; then
       mkdir -p $home
       wget -o $apktool https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool
       wget -o "${apktool}.jar" https://github.com/iBotPeaches/Apktool/releases/download/v2.4.1/apktool_2.4.1.jar
