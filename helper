@@ -59,8 +59,8 @@ function check_apktool()
    local apktool="$home/apktool"
    if [ ! -e $apktool ]; then
       mkdir -p $home
-      wget -o $apktool https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool
-      wget -o "${apktool}.jar" https://github.com/iBotPeaches/Apktool/releases/download/v2.4.1/apktool_2.4.1.jar
+      wget -O $apktool https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool
+      wget -O "${apktool}.jar" https://github.com/iBotPeaches/Apktool/releases/download/v2.4.1/apktool_2.4.1.jar
       chmod +x $apktool
       ln -sf $apktool $DEC_HOME/bin
    fi
