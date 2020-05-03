@@ -3,7 +3,7 @@
       "key":"apktool_default"
    },
    "task":{
-      "script":"./script/test.sh",
+      "script":"./script/anss.sh",
       "is_upload":"true"
    }
 }
