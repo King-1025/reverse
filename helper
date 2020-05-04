@@ -12,6 +12,7 @@ function app()
       "init") init $*;;
       "prepare") prepare $*;;
       "script") exec_script;;
+      "u") git add . && git commit -m "update" && upss -dt push;;
    esac
 }
 
